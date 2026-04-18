@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mansour Printer</title>
+<style>
+body{font-family:Arial;margin:0;background:#f5f5f5}
+header{background:#333;color:#fff;padding:15px;text-align:center}
+.products{display:flex;flex-wrap:wrap;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:10px;padding:15px;margin:10px;width:200px;box-shadow:0 2px 5px rgba(0,0,0,.2);text-align:center}
+img{width:100%;border-radius:10px}
+button{background:#28a745;color:#fff;border:none;padding:10px;border-radius:5px;cursor:pointer;margin-top:5px}
+.menu-icon{position:fixed;top:15px;left:15px;width:60px;height:60px;background:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;cursor:pointer;z-index:1001}
+.menu-full{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:none;padding:20px;z-index:2000}
+.cart-icon{position:fixed;top:15px;right:15px;width:70px;height:70px;background:#28a745;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1001}
+.cart-full{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:none;padding:20px;z-index:2000}
+.close-btn{position:absolute;top:15px;right:15px;background:#000;color:#fff;border:none;padding:8px}
+input,select{width:100%;padding:10px;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="menu-icon" onclick="openMenu()">≡</div>
+
+<div class="menu-full" id="menuFull">
+<button class="close-btn" onclick="closeMenu()">X</button>
+<div style="display:flex;gap:15px;margin-top:40px;flex-wrap:wrap">
+
+<div onclick="showSettings()" style="flex:1;background:#eee;padding:30px;border-radius:10px;text-align:center;cursor:pointer">
+<h3>⚙️ Settings</h3>
+</div>
+
+<div onclick="openWhatsApp()" style="flex:1;background:#eee;padding:30px;border-radius:10px;text-align:center;cursor:pointer">
+<h3>👤 Contact</h3>
+<p>0556848662</p>
+</div>
+
+</div>
+
+<div id="settingsBox" style="display:none;margin-top:20px">
+<input placeholder="Change Name">
+<input placeholder="Change Phone">
+<input placeholder="Change Email">
+<select>
+<option>Language</option>
+<option>English</option>
+<option>Arabic</option>
+</select>
+</div>
+</div>
+
+<div class="cart-icon" onclick="openCart()">🛒</div>
+
+<div class="cart-full" id="cartFull">
+<button class="close-btn" onclick="closeCart()">X</button>
+<h2>Shopping Cart</h2>
+<ul id="cartList"></ul>
+<p id="total"></p>
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone">
+<input id="age" type="number" placeholder="Age">
+<button onclick="checkout()">Checkout</button>
+</div>
+
+<header>
+<h1>Mansour Printer</h1>
+</header>
+
+<div class="products">
+<div class="card">
+<img src="https://via.placeholder.com/200?text=Phone+Stand">
+<h3>Phone Stand</h3>
+<p>$5</p>
+<button onclick="addToCart('Phone Stand',5)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/200?text=Keychain">
+<h3>Keychain</h3>
+<p>$3</p>
+<button onclick="addToCart('Keychain',3)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/200?text=Heart">
+<h3>Heart</h3>
+<p>2 shekels</p>
+<button onclick="addToCart('Heart',2)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/200?text=Name">
+<h3>Name</h3>
+<p>5 shekels</p>
+<button onclick="addToCart('Name',5)">Add</button>
+</div>
+</div>
+
+<script>
+let cart=[];
+function openMenu(){document.getElementById('menuFull').style.display='block'}
+function closeMenu(){document.getElementById('menuFull').style.display='none'}
+function openWhatsApp(){window.location.href='https://wa.me/972556848662'}
+function showSettings(){let box=document.getElementById('settingsBox');box.style.display=box.style.display==='none'?'block':'none'}
+function addToCart(n,p){cart.push({n,p});renderCart()}
+function renderCart(){let l=document.getElementById('cartList');let t=0;l.innerHTML='';cart.forEach(i=>{let li=document.createElement('li');li.textContent=i.n+' - $'+i.p;l.appendChild(li);t+=i.p});document.getElementById('total').textContent='Total: $'+t}
+function openCart(){document.getElementById('cartFull').style.display='block'}
+function closeCart(){document.getElementById('cartFull').style.display='none'}
+function checkout(){let n=document.getElementById('name').value;let p=document.getElementById('phone').value;let a=document.getElementById('age').value;if(!n||!p||!a){alert('fill all');return}let phone='972556848662';let items=cart.map(i=>i.n).join(',');let total=cart.reduce((s,i)=>s+i.p,0);let msg='Name:'+n+' Phone:'+p+' Age:'+a+' Order:'+items+' Total:'+total;window.location.href=`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`}
+</script>
+
+</body>
+</html>
